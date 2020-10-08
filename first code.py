@@ -1,8 +1,13 @@
-def damage(user_input,amount):
+def damage(amount,user_input=0,target = 0):
+    if target == 0:
+        target_class = e_act_cards
+    else:
+        target_class = f_act_cards
     #user_input is the index of the card in the enemy's active card list
     #amount is the amount of damage to be dealt
-    card = enemy_card_list[user_input]
-    card.defx -= amount
+    (target_class.card_list[user_input]).defx -= amount
+    #maybe should run the remove_card function to get rid of damaged cards if they are killed
+    target_class.remove_card()
 
 #HOLDS ALL CARDS AVAILABLE TO BE CURRENTLY ACTIVE
 class active_cards():
@@ -57,7 +62,7 @@ class card():
     '''
     def ability(self,self.ability_unavailable=False):
         if self.ability_index == "damage":
-            self.ability = damage(user_input,self.ability_effect_count)
+            self.ability = damage(self.ability_effect_count)
             self.ability_unavailable = True
         elif self.ability_index == "summon":
             self.ability_unavailable = True
@@ -75,3 +80,11 @@ class card():
 ex_card = card(2)
 ex_active = active_cards()
 #END TESTING
+
+#REAL USE CASE
+f_act_cards = active_cards()
+e_act_cards = active_cards()
+
+f_act_cards.add(ex_card)
+e_act_cards.add(ex_card)
+#END REAL USE CASE
